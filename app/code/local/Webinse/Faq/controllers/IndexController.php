@@ -45,4 +45,7 @@ class Webinse_Faq_IndexController extends Mage_Core_Controller_Front_Action{
         $customerObject = Mage::getModel('customer/customer')->load($id);
         var_dump($customerObject->getData());
     }
+    public function testAction(){
+        echo $this->getRequest()->getClientIp();
+    }
 }
