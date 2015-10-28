@@ -1,51 +1,31 @@
 <?php
 class Webinse_Faq_IndexController extends Mage_Core_Controller_Front_Action{
-    /**
-     * This method has been created to show output to screen
-     * for example you may visit http://localhost/frontName/index/index
-     * frontName you must set in etc/config.xml
-     */
-    public function indexAction(){
-        echo 'Webinse Test Module';
-    }
-
-    /**
-     * This method has been created to show output to screen
-     * you may visit http://localhost/frontName/index/index2
-     */
-    public function index2Action(){
-        $string = 'Webinse Test Module';
-        $this->getResponse()->setBody($string);
-    }
-
-    /**
-     * Use this url to send paramets http://localhost/frontName/index/params?foo=bar&foo2=bar2
-     */
-    public function paramsAction(){
-        /**
-         * here we can get params which we send in url
-         */
-        $params = $this->getRequest()->getParams();
-        echo '<dl>';
-        foreach ($params as $key=>$value) {
-            echo '<dt><strong>Param: </strong>'.$key.'</dt>';
-            echo '<dt><strong>Value: </strong>'.$value.'</dt>';
+    public function getAllFaqAction(){
+        $collection = Mage::getModel('faq/faq')->getCollection();
+        foreach($collection as $item){
+            echo '<h2>'.$item->getQuestion().'</h2>';
+            echo '<p>'.$item->getAnswer().'</p>';
+            echo '<p>'.$item->getTimestamp().'</p>';
         }
-        echo '</dl>';
     }
-
-    /**
-     * use this url to send one parameter http://localhost/frontName/index/getCustomerById/id/1
-     */
-    public function getCustomerByIdAction(){
-        /**
-         * we can retrieve one param from url by using getReguest->getParam('key')
-         */
+    public function addNewFaqAction(){
+        $params = $this->getRequest()->getParams();
+        $faqObject = Mage::getModel('faq/faq');
+        $faqObject->setData($params);
+        $faqObject->save();
+        echo 'New record with id: '.$faqObject->getId().' successfully added.';
+    }
+    public function editFaqByIdAction(){
         $id = $this->getRequest()->getParam('id');
-        $customerObject = Mage::getModel('customer/customer')->load($id);
-        var_dump($customerObject->getData());
+        $faqObject = Mage::getModel('faq/faq')->load($id);
+        $faqObject->setQuestion('edit question');
+        $faqObject->save();
+        echo 'Record with id: '.$faqObject->getId().' has been changed';
     }
-    public function testAction(){
-        echo $this->getRequest()->getClientIp();
+    public function deleteFaqByIdAction(){
+        $id = $this->getRequest()->getParam('id');
+        $faqObject = Mage::getModel('faq/faq')->load($id);
+        $faqObject->delete();
+        echo 'Record with id: '.$faqObject->getId().' has been deleted';
     }
 }

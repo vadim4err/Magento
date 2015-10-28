@@ -29,4 +29,32 @@
             </faq>
         </routers>
     </frontend>
+    <global>
+        <models>
+            <faq>
+                <class>Webinse_Faq_Model</class>
+                <resourceModel>faq_resource</resourceModel>
+            </faq>
+            <faq_resource>
+                <class>Webinse_Faq_Model_Resource</class>
+                <entities>
+                    <faq>
+                        <table>webinse_faq</table>
+                    </faq>
+                </entities>
+            </faq_resource>
+        </models>
+        <!--<resources>
+            <faq_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </faq_write>
+            <faq_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </faq_read>
+        </resources>-->
+    </global>
 </config>
